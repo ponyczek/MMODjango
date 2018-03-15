@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container p-200">
+        <div class="col-md-6">
+            <div class="card bg-dark">
+
+                <div class="card-body">
+                    <h2 class="form-signin-heading gold-font text-center">Register</h2>
+
+                    {% for error in form.non_field_errors %}
+                        <p class='red bold'>{{ error }}</p>
+                    {% endfor %}
+
+                    <form id='registerForm' class="text-center" method="post" action="{% url 'accounts:register' %}">
+
+                        {% csrf_token %}
+
+                        <p>
+                            {% for error in form.username.errors %}
+                                <p class='red bold'>{{ error }}</p>
+                            {% endfor %}
+                        <label for='id_username'>Username:</label>
+                        {{ form.username }}
+                        </p>
+
+                        <p>
+                            {% for error in form.password.errors %}
+                                <p class='red bold'>{{ error }}</p>
+                            {% endfor %}
+                        <label for='id_password'>Password:</label>
+                        {{ form.password }}
+                        </p>
+
+                        <p>
+                            {% for error in form.confirm_password.errors %}
+                                <p class='red bold'>{{ error }}</p>
+                            {% endfor %}
+                        <label for='id_confirm_password'>Confirm Password:</label>
+                        {{ form.confirm_password }}
+                        </p>
+
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,15 @@
+Django==1.9
+django-appconf==1.0.2
+django-compressor==2.2
+django-guardian==1.4.1
+django-sass-processor==0.5.8
+django-static-precompiler==1.8.2
+django-userena==2.0.1
+easy-thumbnails==2.5
+html2text==2014.12.29
+libsass==0.14.1
+Pillow==5.0.0
+pytz==2018.3
+rcssmin==1.0.6
+rjsmin==1.0.12
+six==1.11.0
