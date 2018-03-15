@@ -1,0 +1,38 @@
+$gold-color: #ffeb3b;
+$bg-color: #050e11;
+
+h2 {
+  font-family: 'Tinos';
+  font-size: 3em;
+}
+
+.landing-page {
+  .content {
+    padding: 50px;
+    padding-top: 300px;
+    h2 {
+      color: $gold-color;
+    }
+  }
+}
+
+.standard-padding {
+  padding-top: 20px;
+}
+
+.bg-img {
+  //padding-top: 100px;
+  background: url("/static/img/cave.jpg") no-repeat center center fixed;
+  //background-size: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  position: fixed;
+  min-height: 1000px;
+  min-width: 1980px;
+}
+
+.bg-dark{
+  background-color: $bg-color !important;
+}

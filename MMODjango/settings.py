@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'accounts',
     'dashboard',
     'pages',
+    'static_precompiler',
+    'sass_processor'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -132,3 +134,17 @@ DJANGO_SIMPLE_ACCOUNTS = {
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'static_precompiler.finders.StaticPrecompilerFinder',
+    'sass_processor.finders.CssFinder',
+)
+
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images/upload/')
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/upload/')
+
+MEDIA_URL = '/static/images/upload/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images/upload/')
