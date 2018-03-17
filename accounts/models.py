@@ -1,5 +1,4 @@
 import importlib
-
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
@@ -28,3 +27,4 @@ try:
 except KeyError as e:
     # if no UserProfile class in settings, then no UserProfile
     pass
+

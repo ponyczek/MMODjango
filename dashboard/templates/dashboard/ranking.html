@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="col-md-10 p-100">
+        <div class="card bg-dark">
+            <div class="card-body">
+                <h2 class="form-signin-heading gold-font text-center">Top Players</h2>
+
+                <table class="table table-hover table-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Level:</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for user in users %}
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>{{ user.user.username }}</td>
+                            <td>{{ user.experience }}</td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
