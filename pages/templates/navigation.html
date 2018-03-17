@@ -14,7 +14,7 @@
 
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#about">Adeventure</a>
+                    <a class="nav-link js-scroll-trigger" href="{% url 'dashboard:adventure' %}">Adventure</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link js-scroll-trigger" href="#experience">Market</a>
@@ -32,10 +32,10 @@
         {% else %}
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="{% url 'pages:index' %}">Home</a>
+                    <a class="nav-link js-scroll-trigger" href="{% url 'index' %}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="{% url 'pages:index' %}">About</a>
+                    <a class="nav-link js-scroll-trigger" href="{% url 'about' %}">About</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link js-scroll-trigger" href="{% url 'accounts:register' %}">Sign Up</a>

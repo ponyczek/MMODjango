@@ -1,8 +1,11 @@
 $gold-color: #ffeb3b;
 $bg-color: #050e11;
 
-h2 {
+h1, h2, h3, h4 {
   font-family: 'Tinos';
+}
+
+h2 {
   font-size: 3em;
 }
 
@@ -59,8 +62,51 @@ h2 {
 
 }
 
-
 .p-100 {
   padding-top: 100px !important;
+}
+
+.p-t-50{
+  padding-top: 50px !important;
+}
+
+.p-t-20{
+  padding-top: 20px !important;
+}
+
+.divider-50 {
+  padding-bottom: 50px !important;
+}
+
+.divider-20 {
+  padding-bottom: 20px !important;
+}
+
+.divider-10 {
+  padding-bottom: 10px !important;
+}
+
+.adventure-dashboard {
+  .list-group-item {
+    padding: .1rem .2rem;
+  }
+  .items-list {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .log-list {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .w-100 {
+    width: 100% !important;
+  }
+
+  img {
+    width: 100px;
+    height: 100px;
+  }
 
 }
