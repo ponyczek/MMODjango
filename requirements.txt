@@ -9,6 +9,8 @@ easy-thumbnails==2.5
 html2text==2014.12.29
 libsass==0.14.1
 Pillow==5.0.0
+psycopg2==2.7.4
+psycopg2-binary==2.7.4
 pytz==2018.3
 rcssmin==1.0.6
 rjsmin==1.0.12

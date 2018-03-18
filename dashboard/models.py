@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
+
+
 # from .models import Monster
 
 class UserProfile(models.Model):
@@ -8,17 +10,15 @@ class UserProfile(models.Model):
     gold = models.PositiveIntegerField(default=0)
     items = models.ManyToManyField('Item')
 
+    @property
+    def get_level(self):
+        experience = Experience.objects.filter(experience__lte=self.experience).last()
+        return experience.level
 
-    # @property
-    # def get_level(self):
-    #
-    #     if self.end_date > timezone.now() and timezone.now() > self.start_date:
-    #         return True
-    #     else:
-    #         return False
 
-    def __unicode__(self):
-        return self.user.username
+
+def __unicode__(self):
+    return self.user.username
 
 
 ItemType = (
@@ -28,12 +28,14 @@ ItemType = (
     ('4', 'Weapon'),
 )
 
+
 class Item(models.Model):
     arm = models.PositiveIntegerField(default=0)
     defence = models.PositiveIntegerField(default=0)
     atk = models.PositiveIntegerField(default=0)
     type = models.CharField(max_length=1, choices=ItemType)
     monsters = models.ManyToManyField('Monster')
+
 
 class Monster(models.Model):
     experience = models.PositiveIntegerField(default=1)
@@ -43,5 +45,6 @@ class Monster(models.Model):
     items = models.ManyToManyField(Item)
 
 
-
-
+class Experience(models.Model):
+    experience = models.PositiveIntegerField()
+    level = models.PositiveIntegerField(primary_key=True)
