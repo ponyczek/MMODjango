@@ -1,0 +1,34 @@
+<div class="row divider-20">
+    {% for monster in monsters %}
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{ monster.monster.name }}</h5>
+                    HP: {{ monster.health_left }}/{{ monster.monster.health }}
+                    <div class="progress">
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: 100%"
+                             aria-valuenow="{{ monster.health_left }}" aria-valuemin="0"
+                             aria-valuemax="{{ monster.monster.health }}"></div>
+                    </div>
+                    <div class="row divider-20">
+                    </div>
+                    <div class="row divider-20">
+                        <div class="col-md-12 text-center">
+                            <img src="{{ monster.monster.sprite_url }}" alt="{{ monster.monster.name }}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center divider-10">
+                            <a href="#" class="btn btn-danger w-100">Attack</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center w-100">
+                            <a href="#" class="btn btn-primary w-100">Draw New Monster</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

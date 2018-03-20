@@ -4,147 +4,17 @@
         <div class="col-md-10">
             <div class="card bg-dark">
                 <div class="card-body">
-                    {#                    <h2 class="form-signin-heading gold-font text-center">Player Name</h2>#}
                     <div class="row">
-
-                        <div class="col-md-4 ">
-                            <div class="player-details">
-                                <h3 class="form-signin-heading gold-font ">{{ request.user.username }}</h3>
-                                <h3 class="form-signin-heading gold-font ">Level: {{ user_profile.get_level }}</h3>
-                                <h3 class="form-signin-heading gold-font ">
-                                    Experience: {{ user_profile.experience }}</h3>
-                                <h3 class="form-signin-heading gold-font ">Gold: {{ user_profile.gold }}</h3>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <h4 class="form-signin-heading gold-font text-center">Equipment</h4>
-                            <div class="row">
-                                <div class="col-md-4 text-center">1</div>
-                                <div class="col-md-4 text-center">1</div>
-                                <div class="col-md-4 text-center">1</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 text-center">1</div>
-                                <div class="col-md-4 text-center">1</div>
-                                <div class="col-md-4 text-center">1</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 text-center">1</div>
-                                <div class="col-md-4 text-center">1</div>
-                                <div class="col-md-4 text-center">1</div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <h4 class="form-signin-heading gold-font text-center">Items</h4>
-                            <div class="col-md-12">
-                                <div class="list-group items-list" id="item-list">
-                                    <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis
-                                        in</a>
-
-                                    <a href="#" class="list-group-item list-group-item-action list-group-item-primary">This
-                                        is a
-                                        primary list group item</a>
-                                    <a href="#"
-                                       class="list-group-item list-group-item-action list-group-item-secondary">This
-                                        is
-                                        a secondary list group item</a>
-                                    <a href="#" class="list-group-item list-group-item-action list-group-item-success">This
-                                        is a
-                                        success list group item</a>
-                                    <a href="#" class="list-group-item list-group-item-action list-group-item-danger">This
-                                        is a
-                                        danger list group item</a>
-                                    <a href="#" class="list-group-item list-group-item-action list-group-item-warning">This
-                                        is a
-                                        warning list group item</a>
-                                    <a href="#" class="list-group-item list-group-item-action list-group-item-info">This
-                                        is
-                                        a
-                                        info list group item</a>
-                                    <a href="#" class="list-group-item list-group-item-action list-group-item-light">This
-                                        is
-                                        a
-                                        light list group item</a>
-                                    <a href="#" class="list-group-item list-group-item-action list-group-item-dark">This
-                                        is
-                                        a
-                                        dark list group item</a>
-                                </div>
-                            </div>
-                        </div>
-
+                        {% include 'dashboard/partials/_player_detail.html' %}
+                        {% include 'dashboard/partials/_equipment.html' %}
+                        {% include 'dashboard/partials/_items_list.html' %}
                     </div>
                     <h4 class="form-signin-heading gold-font text-center">Monsters</h4>
 
-                    <div class="row divider-20">
-                        {% for monster in monsters %}
-
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title text-center">{{ monster.monster.name }}</h5>
-                                        HP: {{ monster.health_left }}/{{ monster.monster.health }}
-                                        <div class="progress">
-                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 100%"
-                                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <div class="row divider-20">
-
-                                        </div>
-                                        <div class="row divider-20">
-                                            <div class="col-md-12 text-center">
-                                                <img src="{{ monster.monster.sprite_url }}" alt="{{ monster.monster.name }}">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12 text-center divider-10">
-                                                <a href="#" class="btn btn-danger w-100">Attack</a>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12 text-center w-100">
-                                                <a href="#" class="btn btn-primary w-100">Draw New Monster</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
+                    {% include 'dashboard/partials/_monsters.html' %}
                     <h4 class="form-signin-heading gold-font text-center">Log</h4>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="list-group log-list" id="log-list">
-                                <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-primary">This
-                                    is a
-                                    primary list group item</a>
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">This
-                                    is
-                                    a secondary list group item</a>
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-success">This
-                                    is a
-                                    success list group item</a>
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-danger">This
-                                    is a
-                                    danger list group item</a>
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-warning">This
-                                    is a
-                                    warning list group item</a>
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-info">This is
-                                    a
-                                    info list group item</a>
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-light">This is
-                                    a
-                                    light list group item</a>
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-dark">This is
-                                    a
-                                    dark list group item</a>
-                            </div>
-                        </div>
-                    </div>
+                    {% include 'dashboard/partials/_action_log.html' %}
                 </div>
             </div>
         </div>
