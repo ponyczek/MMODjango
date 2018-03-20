@@ -35,9 +35,12 @@ class Item(models.Model):
     atk = models.PositiveIntegerField(default=0)
     type = models.CharField(max_length=1, choices=ItemType)
     monsters = models.ManyToManyField('Monster')
+    drop_chance = models.PositiveIntegerField(default=1)  #generatePseudoRandomNumber(0, 100) if(rand <= dropChance * 100)
+
 
 
 class Monster(models.Model):
+    name = models.CharField(max_length=50, default="")
     experience = models.PositiveIntegerField(default=1)
     gold = models.PositiveIntegerField(default=0)
     health = models.PositiveIntegerField(default=1)
@@ -48,3 +51,9 @@ class Monster(models.Model):
 class Experience(models.Model):
     experience = models.PositiveIntegerField()
     level = models.PositiveIntegerField(primary_key=True)
+
+
+class UserMonster(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    monster = models.ForeignKey(Monster, on_delete=models.CASCADE)
+    health_left = models.PositiveIntegerField()

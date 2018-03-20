@@ -9,8 +9,9 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Level:</th>
+                        <th scope="col">Player</th>
+                        <th scope="col">Level</th>
+                        <th scope="col">Experience</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -19,6 +20,7 @@
                         <tr>
                             <th scope="row">1</th>
                             <td>{{ user.user.username }}</td>
+                            <td>{{ user.get_level }}</td>
                             <td>{{ user.experience }}</td>
                         </tr>
                     {% endfor %}
