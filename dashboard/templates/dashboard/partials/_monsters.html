@@ -1,12 +1,76 @@
+<script>
+    function updateHealth(data) {
+        var selected_id = ("#monster-id-" + data.user_monster_id);
+        var monster_health_left_text = $(selected_id + ' .monster-hp-current');
+        monster_health_left_text.text(data.health_left + '');
+        var monster_health_bar = $(selected_id + ' .progress-bar');
+        monster_health_bar.attr('aria-valuenow', data.health_left + '').css('width', data.percentage + '%');
+    }
+
+    function replaceOldMonster(data, level) {
+        var replacedId = "#monster-id-" + data.killed_monster_id;
+        var card_name = $(replacedId + ' .card-title');
+        card_name.text(data.monster.name);
+        var monster_health_left_text = $(replacedId + ' .monster-hp-current');
+        monster_health_left_text.text(data.monster.health + '');
+        var monster_health_max_text = $(replacedId + ' .monster-hp-max');
+        monster_health_max_text.text(data.monster.health + '');
+        var monster_health_bar = $(replacedId + " .progress-bar");
+        monster_health_bar.attr('aria-valuenow', data.monster.health + '').css('width', '100%');
+        monster_health_bar.attr('aria-valuemax', data.monster.health + '').css('width', '100%');
+        var image = $(replacedId + " img");
+        var d = new Date();
+        image.attr('src', data.monster.sprite_url);
+        image.attr('alt', data.monster.name);
+        var button = $(replacedId + " button");
+        var attack_url = '/dashboard/' + data.user_monster_id + '/attack/';
+        var funcName = "attackMonster('" +attack_url + "'," + level + ")"; //level should come from server in case it was updated
+        button.attr('onclick', funcName);
+        $(replacedId).attr('id', 'monster-id-' + data.user_monster_id);
+    }
+
+    function attackMonster(url, level) {
+        {#        var user_monster = {'user_monster_id': catid}#}
+        {#        $.get(`/rango/like_category/${}`, {category_id: catid}, function (data) {#}
+        {#            #}
+        {#    }#}
+        {#                url = {% url 'dashboard:attack' user_monster_id %};#}
+        {#        console.log(url);#}
+        {#        url = url#}
+        var extra_data = {level: JSON.stringify(level)};
+        $.ajax({
+            {#            type: "GET",#}
+            url: url,
+            dataType: "JSON",
+            data: extra_data,
+            success: function (data) {
+                console.log(data);
+                if (data.killed) {
+                    replaceOldMonster(data, level);
+                } else {
+                    updateHealth(data, level);
+
+                }
+            },
+            error: function () {
+                console.log('error');
+            }
+        });
+
+    }
+</script>
 <div class="row divider-20">
     {% for monster in monsters %}
-        <div class="col-md-4">
+        <div class="col-md-4" id="monster-id-{{ monster.id }}">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title text-center">{{ monster.monster.name }}</h5>
-                    HP: {{ monster.health_left }}/{{ monster.monster.health }}
+                    HP: <p class="monster-hp-current" style="display:inline">{{ monster.health_left }}</p>/<p
+                        class="monster-hp-max"
+                        style="display:inline">{{ monster.monster.health }}</p>
                     <div class="progress">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: 100%"
+                        <div class="progress-bar bg-danger" role="progressbar"
+                             style="width: {{ monster.get_health_percentage }}%"
                              aria-valuenow="{{ monster.health_left }}" aria-valuemin="0"
                              aria-valuemax="{{ monster.monster.health }}"></div>
                     </div>
@@ -19,14 +83,12 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12 text-center divider-10">
-                            <a href="#" class="btn btn-danger w-100">Attack</a>
+                            <button onclick="attackMonster('{% url 'dashboard:attack' monster.id %}', {{ user_profile.get_level }})"
+                                    class="btn btn-primary w-100">Attack
+                            </button>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12 text-center w-100">
-                            <a href="#" class="btn btn-primary w-100">Draw New Monster</a>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
