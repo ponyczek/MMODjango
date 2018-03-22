@@ -1,9 +1,11 @@
 <div class="col-md-4 ">
-    <div class="player-details">
-        <h3 class="form-signin-heading gold-font ">{{ request.user.username }}</h3>
-        <h3 class="form-signin-heading gold-font ">Level: {{ user_profile.get_level }}</h3>
-        <h3 class="form-signin-heading gold-font ">
-            Experience: {{ user_profile.experience }}</h3>
-        <h3 class="form-signin-heading gold-font ">Gold: {{ user_profile.gold }}</h3>
+    <div class="player-details" id="player-id-{{ user_profile.id }}">
+        <h3 class="form-signin-heading gold-font player-name">{{ request.user.username }}</h3>
+        <h3 class="gold-font d-inline ">Level: </h3>
+        <h3 class="gold-font player-level d-inline ">{{ user_profile.get_level }}</h3><br>
+        <h3 class="gold-font d-inline">Experience: </h3>
+        <h3 class="gold-font d-inline player-experience"> {{ user_profile.experience }}</h3><br>
+        <h3 class="gold-font d-inline">Gold: </h3>
+        <h3 class="gold-font d-inline  player-gold">{{ user_profile.gold }}</h3>
     </div>
 </div>

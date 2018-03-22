@@ -24,9 +24,21 @@
         image.attr('alt', data.monster.name);
         var button = $(replacedId + " button");
         var attack_url = '/dashboard/' + data.user_monster_id + '/attack/';
-        var funcName = "attackMonster('" +attack_url + "'," + level + ")"; //level should come from server in case it was updated
+        var funcName = "attackMonster('" + attack_url + "'," + level + ")"; //level should come from server in case it was updated
         button.attr('onclick', funcName);
         $(replacedId).attr('id', 'monster-id-' + data.user_monster_id);
+    }
+
+    function updatePlayer(data) {
+        var player_div = "#player-id-" + data.user_profile.id;
+        $(player_div + " .player-level").text(data.level);
+        $(player_div + " .player-experience").text(data.user_profile.experience);
+        $(player_div + " .player-gold").text(data.user_profile.gold);
+    }
+
+    function appendToLog(text, color_class){
+        var d = moment(new Date()).format("HH:mm:ss: ");
+        $("#log-list").prepend('<li class="list-group-item list-group-item-action ' + color_class + '">' + d + text + '</li>');
     }
 
     function attackMonster(url, level) {
@@ -47,8 +59,12 @@
                 console.log(data);
                 if (data.killed) {
                     replaceOldMonster(data, level);
+                    updatePlayer(data);
+                    appendToLog(data.damage_message, "list-group-item-danger");
+                    appendToLog(data.experience_message, "");
                 } else {
                     updateHealth(data, level);
+                    appendToLog(data.damage_message, "list-group-item-danger");
 
                 }
             },

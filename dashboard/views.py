@@ -1,12 +1,11 @@
 from random import randint
 
 from django.contrib.auth.decorators import login_required
+from django.forms.models import model_to_dict
 from django.http import JsonResponse
 from django.shortcuts import render
-import json
+
 from .models import UserProfile, User, UserMonster, Monster
-from django.core.serializers import serialize
-from django.forms.models import model_to_dict
 
 
 # Create your views here.
@@ -22,11 +21,6 @@ def adventure(request):
         monster_count = len(user_monsters)
         while monster_count < 3:
             monster = Monster.objects.order_by('?').first()
-            # user_monster = UserMonster()
-            # user_monster.user = user
-            # user_monster.monster = monster
-            # user_monster.health_left = monster.health
-            # user = User.objects.filter(pk=request.user.id)
             UserMonster.objects.create(user=user, monster=monster, health_left=monster.health)
             monster_count = monster_count + 1
     user_monsters = UserMonster.objects.filter(user=user)
@@ -58,32 +52,39 @@ def attack(request, user_monster_id):
             'user_monster_id': user_monster_id,
             'health_left': user_monster.health_left,
             'percentage': user_monster.get_health_percentage,
-            'damage_message': 'you dealt x damage to x',
+            'damage_message': dmg_msg(damage, user_monster.monster.name),
         }
     else:
         user_monster_to_del = UserMonster.objects.get(pk=user_monster_id)
         user = user_monster_to_del.user
+
+        user_profile = UserProfile.objects.get(user=user)
+        experience_gained = user_monster_to_del.monster.experience
+        user_profile.experience = user_profile.experience + experience_gained
+        gold_gained = randint(0, (user_monster_to_del.monster.gold))
+        user_profile.gold = user_profile.gold + gold_gained
+        user_profile.save()
+
         user_monster_to_del.delete()
         monster = Monster.objects.order_by('?').first()
         new_user_monster = UserMonster.objects.create(user=user, monster=monster, health_left=monster.health)
         monster_obj = model_to_dict(monster)
+        user_obj = model_to_dict(user_profile)
+
         json_context = {
             'killed': True,
             'killed_monster_id': user_monster_id,
             'user_monster_id': new_user_monster.id,
             'monster': monster_obj,
+            'user_profile': user_obj,
+            'level': user_profile.get_level,
             # 'health_left': user_monster.health_left,
             # 'percentage': user_monster.get_health_percentage,
             'loot_message': 'you looted x',
-            'damage_message': 'you dealt x damage to x',
-            'experience_message': 'you gained x experience'
+            'damage_message': dmg_msg(damage, user_monster.monster.name),
+            'experience_message': exp_msg(experience_gained, user_monster.monster.name)
         }
         # print('test')
-        # draw items
-        # update user experience
-        # add user gold
-        # destroy monster
-        # create user_monster.
 
     # users = UserProfile.objects.order_by('experience')
     # user_profile = UserProfile.objects.filter(user=user).get()
@@ -92,3 +93,18 @@ def attack(request, user_monster_id):
     # attack monster
     # attack monster
     # attack monster
+
+
+def exp_msg(exp, monster):
+    return str('You gained ' + str(exp) + ' experience points for killing ' + monster +'.')
+
+
+def loot_msg(item, monster, gold):
+    if item != None:
+        return str('Loot from' + monster + ': ' + item + '. Gold: ' + gold)
+    else:
+        return str('Gold: ' + gold + ' from ' + monster + '.')
+
+
+def dmg_msg(dmg, monster):
+    return str('You dealt ' + str(dmg) + ' damage to ' + monster + '.')

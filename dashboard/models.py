@@ -57,3 +57,6 @@ class UserMonster(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     monster = models.ForeignKey(Monster, on_delete=models.CASCADE)
     health_left = models.PositiveIntegerField()
+    @property
+    def get_health_percentage(self):
+        return (self.health_left/self.monster.health)*100
