@@ -67,11 +67,15 @@ h2 {
   overflow-y: auto; }
 .adventure-dashboard .log-list {
   max-height: 200px;
-  overflow-y: auto; }
+  overflow-y: auto;
+  min-height: 200px; }
 .adventure-dashboard .w-100 {
   width: 100% !important; }
 .adventure-dashboard img {
   width: 100px;
   height: 100px; }
+.adventure-dashboard .head-eq img, .adventure-dashboard .armor-eq img, .adventure-dashboard .weapon-eq img, .adventure-dashboard .shield-eq img {
+  height: 50px;
+  width: 50px; }
 
 /*# sourceMappingURL=style.css.map */

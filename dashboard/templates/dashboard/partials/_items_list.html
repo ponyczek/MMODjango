@@ -2,37 +2,24 @@
     <h4 class="form-signin-heading gold-font text-center">Items</h4>
     <div class="col-md-12">
         <div class="list-group items-list" id="item-list">
-            <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis
-                in</a>
-
-            <a href="#" class="list-group-item list-group-item-action list-group-item-primary">This
-                is a
-                primary list group item</a>
-            <a href="#"
-               class="list-group-item list-group-item-action list-group-item-secondary">This
-                is
-                a secondary list group item</a>
-            <a href="#" class="list-group-item list-group-item-action list-group-item-success">This
-                is a
-                success list group item</a>
-            <a href="#" class="list-group-item list-group-item-action list-group-item-danger">This
-                is a
-                danger list group item</a>
-            <a href="#" class="list-group-item list-group-item-action list-group-item-warning">This
-                is a
-                warning list group item</a>
-            <a href="#" class="list-group-item list-group-item-action list-group-item-info">This
-                is
-                a
-                info list group item</a>
-            <a href="#" class="list-group-item list-group-item-action list-group-item-light">This
-                is
-                a
-                light list group item</a>
-            <a href="#" class="list-group-item list-group-item-action list-group-item-dark">This
-                is
-                a
-                dark list group item</a>
+            {% for item in user_profile.items.all %}
+                <li class="list-group-item list-group-item-action list-group-item-primary">
+                    {{ item.name }}
+                    {% if item.defence %}
+                        (Def: {{ item.defence }})
+                    {% elif item.atk %}
+                        (Atk: {{ item.atk }})
+                    {% else %}
+                        (Arm: {{ item.arm }})
+                    {% endif %}
+                    <a href="" class="pull-right">Sell</a>
+                    <p class="d-inline pull-right"> | </p>
+                    <a href="" class="pull-right">Equip</a>
+                    <p class="d-inline pull-right"> | </p>
+                    <a href="" class="pull-right">Take off</a>
+                </li>
+                {{ item.get_best_armor }}
+            {% endfor %}
         </div>
     </div>
 </div>

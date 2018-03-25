@@ -36,22 +36,28 @@
         $(player_div + " .player-gold").text(data.user_profile.gold);
     }
 
-    function appendToLog(text, color_class){
+    function appendToLog(text, color_class) {
         var d = moment(new Date()).format("HH:mm:ss: ");
         $("#log-list").prepend('<li class="list-group-item list-group-item-action ' + color_class + '">' + d + text + '</li>');
     }
 
+    function appendToItems(items) {
+        items.forEach(function (item) {
+            var info = "";
+            if(item.arm  !== 0 ){
+                info = (" (Arm: " + item.arm+ ")");
+            }else if(item.defence !== 0 ){
+                info = (" (Def: " + item.arm+ ")")
+            }else{
+                info = (" (Atk: " + item.arm+ ")")
+            }
+            $("#item-list").prepend('<li class="list-group-item list-group-item-action list-group-item-primary">' + item.name + info  + '</li>');
+        })
+    }
+
     function attackMonster(url, level) {
-        {#        var user_monster = {'user_monster_id': catid}#}
-        {#        $.get(`/rango/like_category/${}`, {category_id: catid}, function (data) {#}
-        {#            #}
-        {#    }#}
-        {#                url = {% url 'dashboard:attack' user_monster_id %};#}
-        {#        console.log(url);#}
-        {#        url = url#}
         var extra_data = {level: JSON.stringify(level)};
         $.ajax({
-            {#            type: "GET",#}
             url: url,
             dataType: "JSON",
             data: extra_data,
@@ -62,6 +68,8 @@
                     updatePlayer(data);
                     appendToLog(data.damage_message, "list-group-item-danger");
                     appendToLog(data.experience_message, "");
+                    appendToLog(data.loot_message, "list-group-item-warning");
+                    appendToItems(JSON.parse(data.items));
                 } else {
                     updateHealth(data, level);
                     appendToLog(data.damage_message, "list-group-item-danger");

@@ -98,6 +98,7 @@ h2 {
   .log-list {
     max-height: 200px;
     overflow-y: auto;
+    min-height: 200px;
   }
 
   .w-100 {
@@ -107,6 +108,13 @@ h2 {
   img {
     width: 100px;
     height: 100px;
+  }
+
+  .head-eq, .armor-eq, .weapon-eq, .shield-eq{
+    img{
+      height: 50px;
+      width: 50px;
+    }
   }
 
 }
