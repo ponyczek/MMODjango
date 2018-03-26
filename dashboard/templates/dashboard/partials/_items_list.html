@@ -2,23 +2,26 @@
     <h4 class="form-signin-heading gold-font text-center">Items</h4>
     <div class="col-md-12">
         <div class="list-group items-list" id="item-list">
-            {% for item in user_profile.items.all %}
+            {% for user_item in user_items %}
                 <li class="list-group-item list-group-item-action list-group-item-primary">
-                    {{ item.name }}
-                    {% if item.defence %}
-                        (Def: {{ item.defence }})
-                    {% elif item.atk %}
-                        (Atk: {{ item.atk }})
+                    {{ user_item.item.name }}
+                    {% if user_item.item.defence %}
+                        (Def: {{ user_item.item.defence }})
+                    {% elif user_item.item.atk %}
+                        (Atk: {{ user_item.item.atk }})
                     {% else %}
-                        (Arm: {{ item.arm }})
+                        (Arm: {{ user_item.item.arm }})
                     {% endif %}
-                    <a href="" class="pull-right">Sell</a>
-                    <p class="d-inline pull-right"> | </p>
-                    <a href="" class="pull-right">Equip</a>
-                    <p class="d-inline pull-right"> | </p>
-                    <a href="" class="pull-right">Take off</a>
+                    {% if user_item.equipped %}
+                        <a href="{% url 'dashboard:take_off' user_item.id %}" class="pull-right">Take off</a>
+                    {% else %}
+                        <a href="" class="pull-right">Sell</a>
+                        <p class="d-inline pull-right"> | </p>
+                        <a href="{% url 'dashboard:equip' user_item.id %}" class="pull-right">Equip</a>
+                    {% endif %}
+
                 </li>
-                {{ item.get_best_armor }}
+                {{ user_item.item.get_best_armor }}
             {% endfor %}
         </div>
     </div>

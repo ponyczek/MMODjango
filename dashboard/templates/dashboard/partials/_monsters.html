@@ -45,13 +45,14 @@
         items.forEach(function (item) {
             var info = "";
             if(item.arm  !== 0 ){
-                info = (" (Arm: " + item.arm+ ")");
+                info = (" (Arm: " + item.item.arm+ ")");
             }else if(item.defence !== 0 ){
-                info = (" (Def: " + item.arm+ ")")
+                info = (" (Def: " + item.item.arm+ ")")
             }else{
-                info = (" (Atk: " + item.arm+ ")")
+                info = (" (Atk: " + item.item.arm+ ")")
             }
-            $("#item-list").prepend('<li class="list-group-item list-group-item-action list-group-item-primary">' + item.name + info  + '</li>');
+            var li_tag = `<li class="list-group-item list-group-item-action list-group-item-primary"><a href ="" class="pull-right">Sell </a><p class="d-inline pull-right"> | </p><a href="/dashboard/equip/${item.id}/" class="pull-right">Equip</a>${item.item.name} ${info}</li>`;
+            $("#item-list").prepend(li_tag);
         })
     }
 

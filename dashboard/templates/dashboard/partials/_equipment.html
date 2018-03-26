@@ -6,32 +6,24 @@
             {% if  helmet %}
                 <img src="{{ helmet.sprite_url }}">
             {% endif %}
-            {#            {% if  user_profile.get_best_helmet.sprite_url %}#}
-            {#                <img src="{{ user_profile.get_best_helmet.sprite_url }}">#}
-            {#            {% endif %}#}
         </div>
         <div class="col-md-4 text-center"></div>
     </div>
     <div class="row p-t-20">
         <div class="col-md-4 text-center weapon-eq">
-
-            {#            {% if  user_profile.get_best_weapon.sprite_url %}#}
-            {#                <img src="{{ user_profile.get_best_weapon.sprite_url }}">#}
-            {#            {% endif %}#}
+            {% if weapon %}
+                <img src="{{ weapon.sprite_url }}">
+            {% endif %}
         </div>
         <div class="col-md-4 text-center armor-eq">
             {% if armor %}
                 <img src="{{ armor.sprite_url }}">
-
             {% endif %}
-            {#            {% if  user_profile.get_best_armor.sprite_url %}#}
-            {#                <img src="{{ user_profile.get_best_armor.sprite_url }}">#}
-            {#            {% endif %}#}
         </div>
         <div class="col-md-4 text-center shield-eq">
-            {#            {% if  user_profile.get_best_shield.sprite_url %}#}
-            {#                <img src="{{ user_profile.get_best_shield.sprite_url }}">#}
-            {#            {% endif %}#}
+            {% if  shield %}
+                <img src="{{ shield.sprite_url }}">
+            {% endif %}
         </div>
     </div>
 </div>
