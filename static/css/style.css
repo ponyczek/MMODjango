@@ -78,4 +78,8 @@ h2 {
   height: 50px;
   width: 50px; }
 
+.card-body .table-container {
+  max-height: 500px;
+  overflow-y: scroll; }
+
 /*# sourceMappingURL=style.css.map */

@@ -5,8 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.forms.models import model_to_dict
 from django.http import JsonResponse
-from django.shortcuts import render, HttpResponseRedirect
-
+from django.shortcuts import render, HttpResponseRedirect, redirect, render_to_response
+from django.views.decorators.csrf import csrf_exempt
 from .models import UserProfile, User, UserMonster, Monster, UserItem
 
 
@@ -26,7 +26,7 @@ def adventure(request):
             monster_count = monster_count + 1
     user_monsters = UserMonster.objects.filter(user=user)
 
-    user_items = UserItem.objects.filter(userprofile=user_profile)
+    user_items = UserItem.objects.filter(userprofile=user_profile, on_market=False)
 
     helmet = {}
     armor = {}
@@ -59,7 +59,7 @@ def adventure(request):
 
 @login_required
 def ranking(request):
-    users = UserProfile.objects.order_by('experience')
+    users = UserProfile.objects.order_by('-experience')
     return render(request, 'dashboard/ranking.html', {'users': users})
 
 
@@ -186,3 +186,52 @@ def take_off(request, user_item_id):
     user_item.equipped = False
     user_item.save()
     return HttpResponseRedirect(reverse('dashboard:adventure'))
+
+@csrf_exempt
+@login_required()
+def sell_item(request, user_item_id):
+    user_item = UserItem.objects.get(pk=user_item_id)
+    user_item.on_market = True
+    user_item.price = request.POST['price']
+    user_item.save()
+    return JsonResponse({'item_to_sell': user_item.pk})
+
+
+@login_required()
+def market(request):
+    user = User.objects.get(pk=request.user.id)
+    user_profile = UserProfile.objects.get(user=user)
+    items_to_buy = UserItem.objects.all().exclude(userprofile=user_profile)
+    return render(request, 'dashboard/market.html', {'items': items_to_buy, 'user_profile': user_profile})
+
+@login_required()
+def buy_item(request, user_item_id):
+    user_item = UserItem.objects.get(pk=user_item_id)
+
+    if user_item.on_market:
+        buyer = UserProfile.objects.get(user_id=request.user.id)
+        seller = user_item.userprofile
+        if buyer.gold >= user_item.price:
+            seller.gold = seller.gold + user_item.price
+            buyer.gold = buyer.gold - user_item.price
+            user_item.userprofile = buyer
+            user_item.on_market = False
+            user_item.save()
+            seller.save()
+            buyer.save()
+            user = User.objects.get(pk=request.user.id)
+            user_profile = UserProfile.objects.get(user=user)
+            items_to_buy = UserItem.objects.all().exclude(userprofile=user_profile)
+            return render(request, 'dashboard/market.html', {'items': items_to_buy, 'user_profile': user_profile, 'success': 'Congratulations! Transaction was successful.'})
+        else:
+            user = User.objects.get(pk=request.user.id)
+            user_profile = UserProfile.objects.get(user=user)
+            items_to_buy = UserItem.objects.all().exclude(userprofile=user_profile)
+            return render(request, 'dashboard/market.html', {'items': items_to_buy, 'user_profile': user_profile, 'error': 'Not enough gold.'})
+    else:
+        user = User.objects.get(pk=request.user.id)
+        user_profile = UserProfile.objects.get(user=user)
+        items_to_buy = UserItem.objects.all().exclude(userprofile=user_profile)
+        return render(request, 'dashboard/market.html',
+                      {'items': items_to_buy, 'user_profile': user_profile, 'error': 'Item no longer on the market'})
+

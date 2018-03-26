@@ -3,8 +3,8 @@
     <div class="col-md-12">
         <div class="list-group items-list" id="item-list">
             {% for user_item in user_items %}
-                <li class="list-group-item list-group-item-action list-group-item-primary">
-                    {{ user_item.item.name }}
+                <li class="list-group-item list-group-item-action list-group-item-primary" id="item-id-{{ user_item.pk }}">
+                        {{ user_item.item.name }}
                     {% if user_item.item.defence %}
                         (Def: {{ user_item.item.defence }})
                     {% elif user_item.item.atk %}
@@ -15,7 +15,7 @@
                     {% if user_item.equipped %}
                         <a href="{% url 'dashboard:take_off' user_item.id %}" class="pull-right">Take off</a>
                     {% else %}
-                        <a href="" class="pull-right">Sell</a>
+                        <a data-toggle="modal" data-target="#sellModal" data-user-item-id="{{ user_item.pk }}" class="pull-right">Sell</a>
                         <p class="d-inline pull-right"> | </p>
                         <a href="{% url 'dashboard:equip' user_item.id %}" class="pull-right">Equip</a>
                     {% endif %}

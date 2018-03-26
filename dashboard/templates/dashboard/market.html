@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="col-md-10 p-100">
+        <div class="card bg-dark">
+            <div class="card-body">
+                <h2 class="form-signin-heading gold-font text-center">Market</h2>
+                <h3 class="form-signin-heading gold-font text-center">Buy items from other players (Your
+                    budget: {{ user_profile.gold }})</h3>
+                {% if error %}
+                    <div id="" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ error }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endif %}
+                {% if success %}
+                    <div id="" class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ success }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endif %}
+                <div class="table-container">
+                    <table class="table table-hover table-dark">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="text-center">#</th>
+                            <th scope="col" class="text-center">Item</th>
+                            <th scope="col" class="text-center">Arm</th>
+                            <th scope="col" class="text-center">Def</th>
+                            <th scope="col" class="text-center">Atk</th>
+                            <th scope="col" class="text-center">Price</th>
+                            <th scope="col" class="text-center">Owner</th>
+                            <th scope="col" class="text-center">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for item in items %}
+                            <tr>
+                                <th scope="row" class="text-center">{{ forloop.counter }}</th>
+                                <td class="text-center">{{ item.item.name }}</td>
+                                <td class="text-center">{{ item.item.arm }}</td>
+                                <td class="text-center">{{ item.item.defence }}</td>
+                                <td class="text-center">{{ item.item.atk }}</td>
+                                <td class="text-center">{{ item.price }} Gold</td>
+                                <td class="text-center">{{ item.userprofile.user }}</td>
+                                <td class="text-center"><a href="{% url 'dashboard:buy_item' item.pk %}"
+                                                           class="text-center">Buy</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

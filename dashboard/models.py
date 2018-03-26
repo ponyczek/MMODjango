@@ -84,3 +84,5 @@ class UserItem(models.Model):
     userprofile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     equipped = models.BooleanField(default=False)
+    on_market = models.BooleanField(default=False)
+    price = models.PositiveIntegerField(default=1)

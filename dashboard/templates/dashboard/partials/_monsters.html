@@ -1,4 +1,6 @@
 <script>
+
+
     function updateHealth(data) {
         var selected_id = ("#monster-id-" + data.user_monster_id);
         var monster_health_left_text = $(selected_id + ' .monster-hp-current');
@@ -44,14 +46,14 @@
     function appendToItems(items) {
         items.forEach(function (item) {
             var info = "";
-            if(item.arm  !== 0 ){
-                info = (" (Arm: " + item.item.arm+ ")");
-            }else if(item.defence !== 0 ){
-                info = (" (Def: " + item.item.arm+ ")")
-            }else{
-                info = (" (Atk: " + item.item.arm+ ")")
+            if (item.item.arm !== 0) {
+                info = (" (Arm: " + item.item.arm + ")");
+            } else if (item.item.defence !== 0) {
+                info = (" (Def: " + item.item.defence + ")")
+            } else {
+                info = (" (Atk: " + item.item.atk + ")")
             }
-            var li_tag = `<li class="list-group-item list-group-item-action list-group-item-primary"><a href ="" class="pull-right">Sell </a><p class="d-inline pull-right"> | </p><a href="/dashboard/equip/${item.id}/" class="pull-right">Equip</a>${item.item.name} ${info}</li>`;
+            var li_tag = `<li class="list-group-item list-group-item-action list-group-item-primary"><a data-toggle="modal" data-target="#sellModal" data-user-item-id="${item.id}" class="pull-right">Sell </a><p class="d-inline pull-right"> | </p><a href="/dashboard/equip/${item.id}/" class="pull-right">Equip</a>${item.item.name} ${info}</li>`;
             $("#item-list").prepend(li_tag);
         })
     }
@@ -74,14 +76,36 @@
                 } else {
                     updateHealth(data, level);
                     appendToLog(data.damage_message, "list-group-item-danger");
-
                 }
             },
             error: function () {
                 console.log('error');
             }
         });
+    }
 
+    function sellItem(user_item_id) {
+        var price = parseInt($('#sellItemPrice').val());
+        {#        console.log(user_item_id, parseInt($('#sellItemPrice').val()));#}
+        var url = `/dashboard/sell-item/${user_item_id}/`;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {'price': price},
+            success: function (data) {
+                removeItemFromList(data)
+            },
+            error: function () {
+                console.log('error');
+            }
+        });
+    }
+
+    function removeItemFromList(data) {
+        var item_to_remove = `#item-id-${data.item_to_sell}`;
+        $(item_to_remove).remove();
+        $("#item-sold-alert").addClass('show');
+        $('#sellModal').modal('hide');
     }
 </script>
 <div class="row divider-20">

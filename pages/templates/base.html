@@ -48,12 +48,12 @@
     <link href="{% static 'vendor/simple-line-icons/css/simple-line-icons.css' %}" rel="stylesheet"/>
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet"/>
     <link href="{% static 'vendor/bootstrap/css/bootstrap-grid.min.css' %}" rel="stylesheet"/>
-    <link href="{% static 'vendor/bootstrap/css/now-ui-kit.css' %}" rel="stylesheet"/>
     {#<link href="{% static 'vendor/bootstrap/css/demo.css' %}" rel="stylesheet"/>#}
     <link href="{% static 'css/resume.min.css' %}" rel="stylesheet">
     <link href="{% sass_src 'css/style.scss' %}" rel="stylesheet"/>
-    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
 
     <!-- Plugin JavaScript -->
@@ -75,6 +75,13 @@
 </div>
 
 {% block bottomscript %}
+    <script>
+        $('#sellModal').on('shown.bs.modal', function (e) {
+         var user_item_id = $(e.relatedTarget).data('user-item-id');
+         $('#sellItemBtn').attr("onclick",`sellItem(${user_item_id})`);
+        $('#myInput').trigger('focus')
+    });
+    </script>
 {% endblock bottomscript %}
 </body>
 </html>
