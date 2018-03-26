@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.forms import ValidationError
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import get_object_or_404, get_list_or_404, render
+from django.shortcuts import get_object_or_404, get_list_or_404, render, redirect
 from django.utils.translation import ugettext as _
 
 from .forms import ProfileForm, RegisterForm, LoginForm
@@ -60,7 +60,7 @@ def custom_login(request):
     context['form'] = form
 
     # next url after login is stored in GET param. default to profile
-    context['next'] = request.GET.get('next', reverse('accounts:profile'))
+    context['next'] = request.GET.get('next', reverse('dashboard:adventure'))
 
     return render(request, 'accounts/login.html', context)
 
@@ -89,7 +89,7 @@ def register(request):
             login(request, new_user)
 
             # redirect
-            return HttpResponseRedirect(reverse('accounts:profile'))
+            return HttpResponseRedirect(reverse('dashboard:adventure'))
 
     else:
         form = RegisterForm()
@@ -143,3 +143,8 @@ def profile(request):
         form = ProfileForm(current_info)
 
     return render(request, 'accounts/profile.html', {'form': form})
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/')

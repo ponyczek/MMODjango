@@ -146,3 +146,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/upload/')
 
 MEDIA_URL = '/static/images/upload/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images/upload/')
+LOGOUT_REDIRECT_URL = '/'
