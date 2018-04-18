@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'd-^h8*zk+3h7=7men=^hum*guu4%6i_^jh#q@=4sbm2o*7l5)d'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# SECURITY WARNING: don'£t run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'dashboard',
     'pages',
     'static_precompiler',
-    'sass_processor'
+    'sass_processor',
+    'chat'
 ]
 
 MIDDLEWARE_CLASSES = [

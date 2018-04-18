@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="col-md-8 p-100">
+        <div class="card bg-dark">
+            <div class="card-body">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                                      <h2 class="form-signin-heading gold-font text-center">Chat</h2>
+                    </div>
+                    <div class="panel-body">
+                        <!-- ul element holding chat messages -->
+                        <ul class="chat" id="chat">
+                        </ul>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="input-group">
+                            <!-- text imput fot the messages to be typed into -->
+                            <input id="btn-input" class="form-control input-sm" placeholder="Type your message here..."
+                                   type="text">
+                            <span class="input-group-btn">
+        <!--- send button for the chat box -->
+                            <button class="btn btn-warning btn-sm" id="btn-chat">
+                                Send</button>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/chat.js"></script>
+{% endblock content %}

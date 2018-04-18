@@ -28,6 +28,7 @@
                         <tr>
                             <th scope="col" class="text-center">#</th>
                             <th scope="col" class="text-center">Item</th>
+                            <th scope="col" class="text-center"></th>
                             <th scope="col" class="text-center">Arm</th>
                             <th scope="col" class="text-center">Def</th>
                             <th scope="col" class="text-center">Atk</th>
@@ -42,6 +43,7 @@
                             <tr>
                                 <th scope="row" class="text-center">{{ forloop.counter }}</th>
                                 <td class="text-center">{{ item.item.name }}</td>
+                                <td class="text-center"><img src="{{ item.item.sprite_url }}"></td>
                                 <td class="text-center">{{ item.item.arm }}</td>
                                 <td class="text-center">{{ item.item.defence }}</td>
                                 <td class="text-center">{{ item.item.atk }}</td>

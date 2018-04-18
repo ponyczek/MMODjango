@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^accounts/', include('accounts.urls', namespace='accounts')),
     url(r'^', include('pages.urls')),
     url(r'^dashboard/', include('dashboard.urls', namespace='dashboard')),
+    url(r'^chat/', include('chat.urls', namespace='chat')),
 ]
