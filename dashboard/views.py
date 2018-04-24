@@ -56,13 +56,13 @@ def adventure(request):
 
     return render(request, 'dashboard/adventure.html', context)
 
-
+#return all plaers in the system sort them by experience points.
 @login_required
 def ranking(request):
     users = UserProfile.objects.order_by('-experience')
     return render(request, 'dashboard/ranking.html', {'users': users})
 
-
+#handle attack of monster
 @login_required()
 def attack(request, user_monster_id):
     user_monster = UserMonster.objects.get(pk=user_monster_id)
@@ -140,6 +140,7 @@ def attack(request, user_monster_id):
 
     return JsonResponse(json_context)
 
+#messages
 
 def exp_msg(exp, monster):
     return str('You gained ' + str(exp) + ' experience points for killing ' + monster + '.')
@@ -156,6 +157,7 @@ def dmg_msg(dmg, monster):
     return str('You dealt ' + str(dmg) + ' damage to ' + monster + '.')
 
 
+
 def serialise_user_items(items):
     serialised_items = []
     for item in items:
@@ -165,6 +167,8 @@ def serialise_user_items(items):
         })
     return serialised_items
 
+
+#equip item
 @login_required()
 def equip(request, user_item_id):
     user_item = UserItem.objects.get(pk=user_item_id)
@@ -179,7 +183,7 @@ def equip(request, user_item_id):
     user_item.save()
     return HttpResponseRedirect(reverse('dashboard:adventure'))
 
-
+#take item off
 @login_required()
 def take_off(request, user_item_id):
     user_item = UserItem.objects.get(pk=user_item_id)
@@ -187,6 +191,8 @@ def take_off(request, user_item_id):
     user_item.save()
     return HttpResponseRedirect(reverse('dashboard:adventure'))
 
+
+#sell item
 @csrf_exempt
 @login_required()
 def sell_item(request, user_item_id):
@@ -197,13 +203,15 @@ def sell_item(request, user_item_id):
     return JsonResponse({'item_to_sell': user_item.pk})
 
 
+#all items on the market
 @login_required()
 def market(request):
     user = User.objects.get(pk=request.user.id)
     user_profile = UserProfile.objects.get(user=user)
-    items_to_buy = UserItem.objects.all().exclude(userprofile=user_profile)
+    items_to_buy = UserItem.objects.all().exclude(userprofile=user_profile, on_market=False)
     return render(request, 'dashboard/market.html', {'items': items_to_buy, 'user_profile': user_profile})
 
+#buy item
 @login_required()
 def buy_item(request, user_item_id):
     user_item = UserItem.objects.get(pk=user_item_id)
@@ -221,17 +229,17 @@ def buy_item(request, user_item_id):
             buyer.save()
             user = User.objects.get(pk=request.user.id)
             user_profile = UserProfile.objects.get(user=user)
-            items_to_buy = UserItem.objects.all().exclude(userprofile=user_profile)
+            items_to_buy = UserItem.objects.all().exclude(userprofile=user_profile, on_market=False)
             return render(request, 'dashboard/market.html', {'items': items_to_buy, 'user_profile': user_profile, 'success': 'Congratulations! Transaction was successful.'})
         else:
             user = User.objects.get(pk=request.user.id)
             user_profile = UserProfile.objects.get(user=user)
-            items_to_buy = UserItem.objects.all().exclude(userprofile=user_profile)
+            items_to_buy = UserItem.objects.all().exclude(userprofile=user_profile, on_market=False)
             return render(request, 'dashboard/market.html', {'items': items_to_buy, 'user_profile': user_profile, 'error': 'Not enough gold.'})
     else:
         user = User.objects.get(pk=request.user.id)
         user_profile = UserProfile.objects.get(user=user)
-        items_to_buy = UserItem.objects.all().exclude(userprofile=user_profile)
+        items_to_buy = UserItem.objects.all().exclude(userprofile=user_profile, on_market=False)
         return render(request, 'dashboard/market.html',
                       {'items': items_to_buy, 'user_profile': user_profile, 'error': 'Item no longer on the market'})
 
