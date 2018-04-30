@@ -1,6 +1,9 @@
 Adrian Grzywaczewski 1204969
 # Simple MMORPG Game: Looting Dungeons
 
+## Link to the video and screenshots from the game:
+[Demo and Screenshots of the game](https://drive.google.com/drive/folders/13lJTBlTZSOOzJkUfA4VZ7t51VL-jANBG?usp=sharing)
+
 ## Key facts about the game:
 
 * Simple MMORPG Game.
